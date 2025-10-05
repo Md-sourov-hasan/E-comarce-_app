@@ -1,13 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:app/counter.dart';
+import 'package:app/my_app.dart';
 
 void main() {
   runApp(MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(debugShowCheckedModeBanner: true, home: CounterPage());
-  }
 }
