@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/instance_manager.dart';
 import 'package:my_app/views/auth/register/register.dart';
 import 'package:my_app/views/home/home.dart';
 
