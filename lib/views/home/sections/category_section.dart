@@ -5,33 +5,33 @@ class CategorySection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
-    List<Map> categories=[
+    List<Map> categories = [
       {
-        'name':'Fashion',
-        'icon':Icons.man
+        'name': 'Fashion',
+        'icon': Icons.man,
       },
       {
-        'name':'Electronics',
-        'icon':Icons.computer,
+        'name': 'Electronics',
+        'icon': Icons.computer,
       },
       {
-        'name':'Applications',
-        "name":Icons.app_blocking
+        'name': 'Applications',
+        'icon': Icons.app_blocking,
       },
       {
-        'name':'Fashion',
-        'icon':Icons.man
+        'name': 'Fashion',
+        'icon': Icons.man,
       },
       {
-        'name':'Electronics',
-        'icon':Icons.computer,
+        'name': 'Electronics',
+        'icon': Icons.computer,
       },
       {
-        'name':'Applications',
-        'name':Icons.app_blocking
+        'name': 'Applications',
+        'icon': Icons.app_blocking,
       },
     ];
+
     return Padding(
       padding: const EdgeInsets.all(15.0),
       child: Column(
@@ -39,16 +39,16 @@ class CategorySection extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text('categories',
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 15,
+              Text(
+                'categories',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 15,
+                ),
               ),
-              ),
-               Text('categories',
-              style: TextStyle(
-               color: Colors.black54
-              ),
+              Text(
+                'View more',
+                style: TextStyle(color: Colors.black54),
               ),
             ],
           ),
@@ -60,37 +60,31 @@ class CategorySection extends StatelessWidget {
             child: ListView.separated(
               itemCount: 6,
               scrollDirection: Axis.horizontal,
-              itemBuilder: (_,index){
-                return Container(
-                  color: Colors.redAccent,
-                  width: 60,
-                );
-              },
-              separatorBuilder: (_,index){
-
-
+              itemBuilder: (_, index) {
                 return Column(
                   children: [
                     Container(
-                      height:60,
+                      height: 60,
                       width: 60,
                       decoration: BoxDecoration(
-                        color: const Color.fromARGB(255, 148, 192, 150),
-                         shape: BoxShape.circle
+                        color: const Color.fromARGB(255, 234, 236, 234),
+                        shape: BoxShape.circle,
                       ),
-                      child: Icon(categories[index]["icon"],
-                      color: Colors.green,
+                      child: Icon(
+                        categories[index]["icon"],
+                        color: Colors.green,
                       ),
                     ),
-                    SizedBox(height: 5,),
-                    Text(categories[index]["name"],
-                    style: TextStyle(
-                      fontSize: 5
-                      ),),
+                    SizedBox(height: 5),
+                    Text(
+                      categories[index]["name"],
+                      style: TextStyle(fontSize: 5),
+                    ),
                   ],
                 );
               },
-              ),
+              separatorBuilder: (_, index) => SizedBox(width: 10),
+            ),
           )
         ],
       ),
