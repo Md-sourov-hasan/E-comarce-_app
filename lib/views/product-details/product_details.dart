@@ -1,6 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
+import 'package:my_app/views/cart.dart';
 import 'package:page_view_dot_indicator/page_view_dot_indicator.dart';
 
 
@@ -13,11 +14,75 @@ class ProductDetailsView extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('product details'),
+        scrolledUnderElevation: 0,
       ),
-      body: Column(
-        children: [
-         ProductSliderSection()
-        ],
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+           ProductSliderSection(),
+           Padding(
+             padding: const EdgeInsets.all(10.0),
+             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text('calvin clein regular fit slim fit shirt',
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w500,
+                ),
+                ),
+                SizedBox(height: 3,),
+                Row(
+                          children: [
+                             Text('\$30',
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w700,
+                        )
+                        ),
+                        SizedBox(width: 5,),
+                         Text('\$35',
+                        style: TextStyle(
+                          color: const Color.fromARGB(255, 73, 72, 72),
+                          decoration: TextDecoration.lineThrough
+                        )
+                        ),
+                          ],
+                        ),
+                        SizedBox(height: 5,),
+                        Divider(
+                          color: Colors.black.withOpacity(0.1),
+                        ),
+                        SizedBox(height: 5,),
+                        Text('Description',
+                        style: TextStyle(
+                          fontWeight: FontWeight.w700,
+                        ),
+                        ),
+                        Text('Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, justo vel tincidunt tempor, libero enim laoreet eros, in sollicitudin nunc lacus sit amet nibh. Curabitur blandit, orci nec dictum facilisis, urna tortor tincidunt nisl, non elementum odio felis nec nulla. Suspendisse bibendum, erat at tristique interdum, magna ipsum laoreet justo, in viverra libero risus ac velit. Quisque ultricies ex id nibh facilisis, sed dapibus turpis facilisis. Nullam finibus risus et orci tincidunt, vitae facilisis justo volutpat. Sed et sapien fringilla, vehicula velit non, gravida purus.',
+                        textAlign: TextAlign.justify,
+                        ),
+              ],
+             ),
+           )
+          ],
+        ),
+      ),
+      bottomNavigationBar: Container(
+        height: 60,
+        color: Colors.white,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+           children: [
+            ElevatedButton(
+              onPressed:(){
+                CartView();
+              },
+               child: Text('Add to card')
+              )
+           ],
+        ),
       ),
     );
   }
