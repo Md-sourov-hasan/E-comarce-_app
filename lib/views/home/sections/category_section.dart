@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class CategorySection extends StatelessWidget {
@@ -5,32 +7,32 @@ class CategorySection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<Map> categories = [
-      {
-        'name': 'Fashion',
-        'icon': Icons.man,
-      },
-      {
-        'name': 'Electronics',
-        'icon': Icons.computer,
-      },
-      {
-        'name': 'Applications',
-        'icon': Icons.app_blocking,
-      },
-      {
-        'name': 'Fashion',
-        'icon': Icons.man,
-      },
-      {
-        'name': 'Electronics',
-        'icon': Icons.computer,
-      },
-      {
-        'name': 'Applications',
-        'icon': Icons.app_blocking,
-      },
-    ];
+    // List<Map> categories = [
+    //   {
+    //     'name': 'Fashion',
+    //     'icon': Icons.man,
+    //   },
+    //   {
+    //     'name': 'Electronics',
+    //     'icon': Icons.computer,
+    //   },
+    //   {
+    //     'name': 'Applications',
+    //     'icon': Icons.app_blocking,
+    //   },
+    //   {
+    //     'name': 'Fashion',
+    //     'icon': Icons.man,
+    //   },
+    //   {
+    //     'name': 'Electronics',
+    //     'icon': Icons.computer,
+    //   },
+    //   {
+    //     'name': 'Applications',
+    //     'icon': Icons.app_blocking,
+    //   },
+    // ];
 
     return Padding(
       padding: const EdgeInsets.all(15.0),
@@ -55,37 +57,51 @@ class CategorySection extends StatelessWidget {
           SizedBox(
             height: 10,
           ),
-          SizedBox(
+          StreamBuilder(
+            stream: FirebaseFirestore.instance.collection('categories').snapshots(),
+             builder: (context,snapshot){
+
+              if(snapshot.connectionState==ConnectionState.waiting){
+                return Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
+              if(snapshot.hasError){
+                print('Error is ${snapshot.error.toString()}');
+              }
+              return SizedBox(
             height: 80,
             child: ListView.separated(
-              itemCount: 6,
+              itemCount: snapshot.data!.docs.length,
               scrollDirection: Axis.horizontal,
               itemBuilder: (_, index) {
+                final category=snapshot.data!.docs[index];
                 return Column(
                   children: [
                     Container(
                       height: 60,
                       width: 60,
+                      padding: EdgeInsets.all(12),
                       decoration: BoxDecoration(
                         color: const Color.fromARGB(255, 234, 236, 234),
                         shape: BoxShape.circle,
                       ),
-                      child: Icon(
-                        categories[index]["icon"],
+                      child: Image.network(category['icon'],
                         color: Colors.green,
                       ),
                     ),
                     SizedBox(height: 5),
-                    Text(
-                      categories[index]["name"],
-                      style: TextStyle(fontSize: 5),
+                    Text(category['name'],
+                      style: TextStyle(fontSize: 10),
                     ),
                   ],
                 );
               },
               separatorBuilder: (_, index) => SizedBox(width: 10),
             ),
-          )
+          );
+             }
+             ),
         ],
       ),
     );
