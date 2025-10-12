@@ -1,38 +1,21 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:get/route_manager.dart';
-import 'package:get/utils.dart';
-import 'package:my_app/views/product-details/product_details.dart';
 
-class ProductsSection extends StatelessWidget {
-  const ProductsSection({super.key});
+class ProductListView extends StatelessWidget {
+  final Map<String,dynamic>category;
+  const ProductListView({super.key,required this.category});
 
   @override
   Widget build(BuildContext context) {
-    final _FireStore = FirebaseFirestore.instance;
-    return Padding(
-      padding: const EdgeInsets.all(10.0),
-      child: Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              const Text(
-                'Resent product',
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 15,
-                ),
-              ),
-              const Text(
-                'View more',
-                style: TextStyle(color: Colors.black54),
-              ),
-            ],
-          ),
-          const SizedBox(height: 10,),
-          StreamBuilder(
-            stream: _FireStore.collection('products').snapshots(),
+    final _FireStore=FirebaseFirestore.instance;
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(category['name']),
+      ),
+      body: StreamBuilder(
+            stream: _FireStore.collection('products').where('category_slug',
+            isEqualTo: category['slug'],
+            ).snapshots(),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return const Center(
@@ -48,6 +31,7 @@ class ProductsSection extends StatelessWidget {
 
               // ✅ এখান থেকে ডেটা থাকলে GridView রিটার্ন হবে
               return GridView.builder(
+                padding: EdgeInsets.all(15),
                 physics: const NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
                 itemCount: snapshot.data!.docs.length,
@@ -60,9 +44,7 @@ class ProductsSection extends StatelessWidget {
                 itemBuilder: (_, index) {
                   final product = snapshot.data!.docs[index];
                   return InkWell(
-                    onTap: () {
-                      Get.to(() => const ProductDetailsView());
-                    },
+                    
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -112,8 +94,6 @@ class ProductsSection extends StatelessWidget {
               );
             },
           ),
-        ],
-      ),
     );
   }
 }

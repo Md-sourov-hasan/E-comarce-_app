@@ -67,9 +67,11 @@ class RegisterView extends StatelessWidget {
            SizedBox(
             height: 10,
           ),
-          ElevatedButton(onPressed: (){
+         Obx(
+          ()=>  ElevatedButton(onPressed: (){
             controller.register();
-          }, child:Text('Register'),)
+          }, child:Text('Register'),),
+         )
         ],
       ),
       ),

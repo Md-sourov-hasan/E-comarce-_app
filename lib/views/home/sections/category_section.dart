@@ -1,6 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:my_app/views/product_list_view.dart';
 
 class CategorySection extends StatelessWidget {
   const CategorySection({super.key});
@@ -76,25 +79,28 @@ class CategorySection extends StatelessWidget {
               scrollDirection: Axis.horizontal,
               itemBuilder: (_, index) {
                 final category=snapshot.data!.docs[index];
-                return Column(
-                  children: [
-                    Container(
-                      height: 60,
-                      width: 60,
-                      padding: EdgeInsets.all(12),
-                      decoration: BoxDecoration(
-                        color: const Color.fromARGB(255, 234, 236, 234),
-                        shape: BoxShape.circle,
+                return InkWell(
+                  onTap: () => Get.to(()=>ProductListView(category: category.data())),
+                  child: Column(
+                    children: [
+                      Container(
+                        height: 60,
+                        width: 60,
+                        padding: EdgeInsets.all(12),
+                        decoration: BoxDecoration(
+                          color:Colors.white,
+                          shape: BoxShape.circle,
+                        ),
+                        child: Image.network(category['icon'],
+                          // color: Colors.green,
+                        ),
                       ),
-                      child: Image.network(category['icon'],
-                        color: Colors.green,
+                      SizedBox(height: 5),
+                      Text(category['name'],
+                        style: TextStyle(fontSize: 10),
                       ),
-                    ),
-                    SizedBox(height: 5),
-                    Text(category['name'],
-                      style: TextStyle(fontSize: 10),
-                    ),
-                  ],
+                    ],
+                  ),
                 );
               },
               separatorBuilder: (_, index) => SizedBox(width: 10),

@@ -97,9 +97,9 @@ class ProductSliderSection extends StatefulWidget {
 
 class _ProductSliderSectionState extends State<ProductSliderSection> {
   List<String>sliders=[
-      'https://xcdn.next.co.uk/common/items/default/default/itemimages/3_4Ratio/product/lge/C83639s6.jpg?im=Resize,width=750',
-      'https://rlv.zcache.com/um_the_element_of_confusion_funny_chemistry_t_shirt-rf2fd988342b74336aac9ba5efabddbf6_jg9db_644.jpg',
-      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShLFhQVf8SpKWPMu8wBUqfI5w6gHM5DHCMS4bweECvva5wxNgCifpSBI_9PSIcpWqIgiQ&usqp=CAU',
+      'https://www.aazbd.com/wp-content/uploads/2023/08/SOLID-GRAY-scaled.jpg',
+      'https://fabrilife.com/products/6465ff10c753e-square.jpg',
+      'https://twelvebd.com/cdn/shop/files/AJ-TSHB-TM24-07S-0285_18.jpg?v=1756707684',
     ];
     int currentIndex=0;
   @override
