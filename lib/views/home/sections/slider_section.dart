@@ -1,4 +1,5 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class SliderSection extends StatelessWidget {
@@ -6,20 +7,23 @@ class SliderSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<String>sliders=[
-      'https://img.freepik.com/free-vector/horizontal-banner-template-black-friday-sales_23-2150867247.jpg?semt=ais_hybrid&w=740&q=80',
-      'https://img.freepik.com/premium-vector/modern-sale-banner-website-slider-template-design_54925-46.jpg?w=360',
-      'https://img.freepik.com/premium-vector/weekend-special-sale-tag-banner-design-template-marketing-special-offer-promotion-retail-back_680598-892.jpg?semt=ais_hybrid&w=740&q=80',
-
-    ];
-    return CarouselSlider.builder(
-      itemCount: sliders.length,
+    return StreamBuilder(
+      stream:FirebaseFirestore.instance.collection('baners').snapshots(),
+       builder: (context,snapshot){
+       if(snapshot.connectionState==ConnectionState.waiting){
+        return Center(
+          child: CircularProgressIndicator(),
+        );
+       }
+       return CarouselSlider.builder(
+      itemCount: snapshot.data!.docs.length,
        itemBuilder: (context,itemIndex,PageViewIndex){
         return Container(
           width: double.infinity,
           
           decoration: BoxDecoration(
-            image: DecorationImage(image: NetworkImage(sliders[itemIndex]),
+            borderRadius: BorderRadius.circular(5),
+            image: DecorationImage(image: NetworkImage(snapshot.data!.docs[itemIndex]['image']),
             fit: BoxFit.cover,
             )
           ),
@@ -41,5 +45,7 @@ class SliderSection extends StatelessWidget {
             scrollDirection: Axis.horizontal,
           ),
         );
+       },
+       );
   }
 }

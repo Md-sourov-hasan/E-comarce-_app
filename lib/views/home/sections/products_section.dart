@@ -5,7 +5,7 @@ import 'package:get/utils.dart';
 import 'package:my_app/views/product-details/product_details.dart';
 
 class ProductsSection extends StatelessWidget {
-  const ProductsSection({super.key});
+  const ProductsSection({super.key,});
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +61,7 @@ class ProductsSection extends StatelessWidget {
                   final product = snapshot.data!.docs[index];
                   return InkWell(
                     onTap: () {
-                      Get.to(() => const ProductDetailsView());
+                      Get.to(() =>  ProductDetailsView(product:product.data(),));
                     },
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -72,7 +72,7 @@ class ProductsSection extends StatelessWidget {
                             color: Colors.red,
                             borderRadius: BorderRadius.circular(3),
                             image: DecorationImage(
-                              image: NetworkImage(product['image']),
+                              image: NetworkImage(product['thumnail']),
                               fit: BoxFit.cover,
                             ),
                           ),

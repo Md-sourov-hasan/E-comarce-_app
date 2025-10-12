@@ -44,7 +44,7 @@ class ProductListView extends StatelessWidget {
                 itemBuilder: (_, index) {
                   final product = snapshot.data!.docs[index];
                   return InkWell(
-                    
+                    // onTap: ()=>,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -54,7 +54,7 @@ class ProductListView extends StatelessWidget {
                             color: Colors.red,
                             borderRadius: BorderRadius.circular(3),
                             image: DecorationImage(
-                              image: NetworkImage(product['image']),
+                              image: NetworkImage(product['thumnail']),
                               fit: BoxFit.cover,
                             ),
                           ),
