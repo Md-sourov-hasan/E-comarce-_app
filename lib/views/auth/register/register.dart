@@ -8,128 +8,58 @@ class RegisterView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(AuthController());
+    final height = MediaQuery.of(context).size.height;
 
     return Scaffold(
-      backgroundColor: const Color(0xFFF5F6FA),
-      body: SafeArea(
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 40),
+      appBar: AppBar(
+        title: const Text('Create Account'),
+        centerTitle: true,
+      ),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Header
-              Center(
-                child: Column(
-                  children: const [
-                    Icon(Icons.person_add_alt_1,
-                        size: 80, color: Colors.deepPurple),
-                    SizedBox(height: 10),
-                    Text(
-                      "Create Account ✨",
-                      style: TextStyle(
-                        fontSize: 26,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.deepPurple,
-                      ),
-                    ),
-                    SizedBox(height: 5),
-                    Text(
-                      "Fill the form to get started",
-                      style: TextStyle(color: Colors.grey),
-                    ),
-                  ],
-                ),
+              const Text(
+                "Welcome to ShopEasy!",
+                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
               ),
-              const SizedBox(height: 35),
+              const SizedBox(height: 10),
+              const Text("Please fill in the details to register."),
+              const SizedBox(height: 30),
 
-              // User Name
-              _buildTextField(
-                controller: controller.nameController,
-                hintText: 'User Name',
-                icon: Icons.person_outline,
-              ),
+              _buildTextField(controller.nameController, "User Name", Icons.person),
+              _buildTextField(controller.emailController, "Email", Icons.email),
+              _buildTextField(controller.phoneController, "Phone Number", Icons.phone),
+              _buildTextField(controller.passwordController, "Password", Icons.lock, isObscure: true),
+              _buildTextField(controller.confirmPasswordController, "Confirm Password", Icons.lock_outline, isObscure: true),
 
-              const SizedBox(height: 15),
+              const SizedBox(height: 30),
 
-              // Email
-              _buildTextField(
-                controller: controller.emailController,
-                hintText: 'Email',
-                icon: Icons.email_outlined,
-              ),
-
-              const SizedBox(height: 15),
-
-              // Phone
-              _buildTextField(
-                controller: controller.phoneController,
-                hintText: 'Phone Number',
-                icon: Icons.phone_outlined,
-                keyboardType: TextInputType.phone,
-              ),
-
-              const SizedBox(height: 15),
-
-              // Password
-              _buildTextField(
-                controller: controller.passwordController,
-                hintText: 'Password',
-                icon: Icons.lock_outline,
-                obscureText: true,
-              ),
-
-              const SizedBox(height: 15),
-
-              // Confirm Password
-              _buildTextField(
-                controller: controller.confirmPasswordController,
-                hintText: 'Confirm Password',
-                icon: Icons.lock_person_outlined,
-                obscureText: true,
-              ),
-
-              const SizedBox(height: 25),
-
-              // Register Button
-              Obx(() {
-                return SizedBox(
-                  width: double.infinity,
-                  height: 50,
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.deepPurple,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      elevation: 5,
-                    ),
-                    onPressed: () {
-                      controller.register();
-                    },
-                    child: const Text(
-                      "Register",
-                      style: TextStyle(
-                          fontSize: 18, fontWeight: FontWeight.w600),
+              Obx(() => SizedBox(
+                width: double.infinity,
+                height: 50,
+                child: ElevatedButton(
+                  onPressed: controller.isLoading.value ? null : () => controller.register(),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.deepPurple,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
                     ),
                   ),
-                );
-              }),
-
+                  child: controller.isLoading.value
+                      ? const CircularProgressIndicator(color: Colors.white)
+                      : const Text("Register", style: TextStyle(fontSize: 16,color: Colors.white)),
+                ),
+              )),
               const SizedBox(height: 20),
-
-              // Go back to login
               Center(
                 child: TextButton(
                   onPressed: () => Get.back(),
-                  child: const Text(
-                    "Already have an account? Login",
-                    style: TextStyle(
-                      color: Colors.deepPurple,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
+                  child: const Text("Already have an account? Login"),
                 ),
-              ),
+              )
             ],
           ),
         ),
@@ -137,28 +67,18 @@ class RegisterView extends StatelessWidget {
     );
   }
 
-  // Custom TextField Widget
-  Widget _buildTextField({
-    required TextEditingController controller,
-    required String hintText,
-    IconData? icon,
-    bool obscureText = false,
-    TextInputType keyboardType = TextInputType.text,
-  }) {
-    return TextField(
-      controller: controller,
-      obscureText: obscureText,
-      keyboardType: keyboardType,
-      decoration: InputDecoration(
-        prefixIcon: Icon(icon, color: Colors.deepPurple),
-        hintText: hintText,
-        filled: true,
-        fillColor: Colors.white,
-        contentPadding:
-            const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-          borderSide: BorderSide.none,
+  Widget _buildTextField(TextEditingController controller, String hint, IconData icon, {bool isObscure = false}) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8),
+      child: TextField(
+        controller: controller,
+        obscureText: isObscure,
+        decoration: InputDecoration(
+          prefixIcon: Icon(icon),
+          hintText: hint,
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+          filled: true,
+          fillColor: Colors.grey.shade100,
         ),
       ),
     );
