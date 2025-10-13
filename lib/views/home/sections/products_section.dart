@@ -9,7 +9,7 @@ class ProductsSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final _FireStore = FirebaseFirestore.instance;
+    final FireStore = FirebaseFirestore.instance;
     return Padding(
       padding: const EdgeInsets.all(10.0),
       child: Column(
@@ -32,7 +32,7 @@ class ProductsSection extends StatelessWidget {
           ),
           const SizedBox(height: 10,),
           StreamBuilder(
-            stream: _FireStore.collection('products').snapshots(),
+            stream: FireStore.collection('products').snapshots(),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return const Center(

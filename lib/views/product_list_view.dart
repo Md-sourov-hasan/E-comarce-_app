@@ -7,13 +7,13 @@ class ProductListView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final _FireStore=FirebaseFirestore.instance;
+    final FireStore=FirebaseFirestore.instance;
     return Scaffold(
       appBar: AppBar(
         title: Text(category['name']),
       ),
       body: StreamBuilder(
-            stream: _FireStore.collection('products').where('category_slug',
+            stream: FireStore.collection('products').where('category_slug',
             isEqualTo: category['slug'],
             ).snapshots(),
             builder: (context, snapshot) {

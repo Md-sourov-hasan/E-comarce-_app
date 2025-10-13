@@ -2,89 +2,129 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:my_app/controller/auth_controller.dart';
 import 'package:my_app/views/auth/register/register.dart';
+import 'package:my_app/views/home/home.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
 
   @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+  final AuthController controller = Get.put(AuthController());
+  bool isPhoneLogin = false; // toggle between email and phone
+
+  @override
   Widget build(BuildContext context) {
-    final controller = Get.put(AuthController());
-
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Login'),
-        centerTitle: true,
-      ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
-          child: Form(
-            key: controller.loginKey,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text(
-                  "Welcome Back!",
-                  style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
+      appBar: AppBar(title: const Text('Login')),
+      body: Padding(
+        padding: const EdgeInsets.all(20),
+        child: Obx(() => SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Toggle between Email / Phone
+              Row(
+                children: [
+                  ChoiceChip(
+                    label: const Text("Email Login"),
+                    selected: !isPhoneLogin,
+                    onSelected: (v) => setState(() => isPhoneLogin = false),
+                  ),
+                  const SizedBox(width: 10),
+                  ChoiceChip(
+                    label: const Text("Phone Login"),
+                    selected: isPhoneLogin,
+                    onSelected: (v) => setState(() => isPhoneLogin = true),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 30),
+
+              // ----------- EMAIL LOGIN ----------- 
+              if (!isPhoneLogin) ...[
+                TextField(
+                  controller: controller.emailController,
+                  keyboardType: TextInputType.emailAddress,
+                  decoration: const InputDecoration(
+                    labelText: "Email",
+                    prefixIcon: Icon(Icons.email),
+                    border: OutlineInputBorder(),
+                  ),
                 ),
-                const SizedBox(height: 10),
-                const Text("Login to continue shopping."),
-                const SizedBox(height: 30),
-
-                _buildFormField(controller.emailController, "Email", Icons.email),
-                _buildFormField(controller.passwordController, "Password", Icons.lock, isObscure: true),
-
-                const SizedBox(height: 30),
-                Obx(() => SizedBox(
-                      width: double.infinity,
-                      height: 50,
-                      child: ElevatedButton(
-                        onPressed: controller.isLoading.value ? null : () => controller.login(),
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.deepPurple,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                        ),
-                        child: controller.isLoading.value
-                            ? const CircularProgressIndicator(color: Colors.white)
-                            : const Text("Login", style: TextStyle(fontSize: 16,color: Colors.white)),
-                      ),
-                    )),
+                const SizedBox(height: 15),
+                TextField(
+                  controller: controller.passwordController,
+                  obscureText: true,
+                  decoration: const InputDecoration(
+                    labelText: "Password",
+                    prefixIcon: Icon(Icons.lock),
+                    border: OutlineInputBorder(),
+                  ),
+                ),
                 const SizedBox(height: 20),
-                Center(
-                  child: TextButton(
-                    onPressed: () => Get.to(() => const RegisterView()),
-                    child: const Text("Don't have an account? Register"),
+                SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    onPressed: controller.isLoading.value
+                        ? null
+                        : () async {
+                            await controller.loginWithEmail();
+                            // check if user is logged in
+                            if (controller.isLoading()) {
+                              Get.offAll(() => HomeView());
+                            }
+                          },
+                    child: controller.isLoading.value
+                        ? const CircularProgressIndicator(color: Colors.white)
+                        : const Text("Login with Email"),
                   ),
                 ),
               ],
-            ),
-          ),
-        ),
-      ),
-    );
-  }
 
-  Widget _buildFormField(TextEditingController controller, String hint, IconData icon, {bool isObscure = false}) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 10),
-      child: TextFormField(
-        controller: controller,
-        obscureText: isObscure,
-        validator: (value) {
-          if (value!.isEmpty) {
-            return 'This field is required';
-          }
-          return null;
-        },
-        decoration: InputDecoration(
-          prefixIcon: Icon(icon),
-          hintText: hint,
-          border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
-          filled: true,
-          fillColor: Colors.grey.shade100,
-        ),
+              // ----------- PHONE LOGIN ----------- 
+              if (isPhoneLogin) ...[
+                TextField(
+                  controller: controller.phoneController,
+                  keyboardType: TextInputType.phone,
+                  decoration: const InputDecoration(
+                    labelText: "Phone Number",
+                    hintText: "+8801XXXXXXXXX",
+                    prefixIcon: Icon(Icons.phone),
+                    border: OutlineInputBorder(),
+                  ),
+                ),
+                const SizedBox(height: 20),
+                SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    onPressed: controller.isLoading.value
+                        ? null
+                        : () => controller.sendOTP(),
+                    child: controller.isLoading.value
+                        ? const CircularProgressIndicator(color: Colors.white)
+                        : const Text("Send OTP"),
+                  ),
+                ),
+              ],
+
+              const SizedBox(height: 30),
+              Center(
+                child: TextButton(
+                  onPressed: () {
+                    Get.to(() => RegisterView());
+                  },
+                  child: const Text(
+                    "Don't have an account? Register",
+                    style: TextStyle(fontSize: 16),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        )),
       ),
     );
   }

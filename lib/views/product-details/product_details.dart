@@ -1,5 +1,4 @@
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:my_app/views/cart.dart';
 import 'package:page_view_dot_indicator/page_view_dot_indicator.dart';

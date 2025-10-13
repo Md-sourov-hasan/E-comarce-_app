@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
-import 'package:get/state_manager.dart';
 import 'package:my_app/views/cart.dart';
 import 'package:my_app/views/home/sections/category_section.dart';
 import 'package:my_app/views/home/sections/products_section.dart';
