@@ -1,10 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:my_app/Grocery_page.dart';
+import 'package:my_app/all_store.dart';
 import 'package:my_app/categories_page.dart';
 import 'package:my_app/cookup_page.dart';
+import 'package:my_app/customer_support.dart';
 import 'package:my_app/egg_club.dart';
+import 'package:my_app/help.dart';
+import 'package:my_app/live_chat.dart';
+import 'package:my_app/login_page.dart';
+import 'package:my_app/offers.dart';
 import 'package:my_app/pharmacy_page.dart';
+import 'package:my_app/premium_care.dart';
+import 'package:my_app/safety_center.dart';
 import 'package:my_app/search-page.dart';
 
 class HomePage extends StatefulWidget {
@@ -73,7 +81,12 @@ Widget _buildDrawer() {
                 children: [
                   const SizedBox(height:10),
               TextButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const LoginPage()),
+                  );
+                },
                  child: Text("Login",style: TextStyle(color: const Color.fromARGB(255, 136, 98, 143),fontSize: 20,fontWeight: FontWeight.bold),)
                  ),
                 ],
@@ -103,44 +116,79 @@ Widget _buildDrawer() {
           leading: const Icon(Icons.store,color: Colors.blueAccent),
           title: const Text("All Store",style: TextStyle(color: Colors.black,)),
           trailing: const Icon(Icons.arrow_forward_ios,size: 16,color: Colors.black,),
-          onTap: () {},
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const AllStore()),
+            );
+          },
         ),
         ListTile(
           leading: const Icon(Icons.percent_outlined,color: Colors.blueAccent),
           title: const Text("All Store",style: TextStyle(color: Colors.black,)),
           trailing: const Icon(Icons.arrow_forward_ios,size: 16,color: Colors.black,),
-          onTap: () {},
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const Offers()),
+            );
+          },
         ),
         Divider(height: 10,),
         ListTile(
           leading: const Icon(Icons.egg,color: Color.fromARGB(255, 241, 239, 79)),
           title: const Text("Premium Care",style: TextStyle(color: Colors.black,)),
           trailing: const Icon(Icons.arrow_forward_ios,size: 16,color: Colors.black,),
-          onTap: () {},
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const PremiumCare()),
+            );
+          },
         ),
         ListTile(
           leading: const Icon(Icons.help_outline,color: Color.fromARGB(255, 214, 89, 236)),
           title: const Text("Help",style: TextStyle(color: Colors.black,)),
           trailing: const Icon(Icons.arrow_forward_ios,size: 16,color: Colors.black,),
-          onTap: () {},
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const Help()),
+            );
+          },
         ),
         ListTile(
           leading: const Icon(Icons.phone_outlined,color: Color.fromARGB(255, 214, 89, 236)),
           title: const Text("Customer Service",style: TextStyle(color: Colors.black,)),
           trailing: const Icon(Icons.arrow_forward_ios,size: 16,color: Colors.black,),
-          onTap: () {},
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const CustomerSupport()),
+            );
+          },
         ),
         ListTile(
           leading: const Icon(Icons.chat_outlined,color: Color.fromARGB(255, 214, 89, 236)),
-          title: const Text("Customer Service",style: TextStyle(color: Colors.black,)),
+          title: const Text("Live Chat",style: TextStyle(color: Colors.black,)),
           trailing: const Icon(Icons.arrow_forward_ios,size: 16,color: Colors.black,),
-          onTap: () {},
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const LiveChat()),
+            );
+          },
         ),
         ListTile(
           leading: const Icon(Icons.safety_check_rounded,color: Color.fromARGB(255, 214, 89, 236)),
-          title: const Text("Customer Service",style: TextStyle(color: Colors.black,)),
+          title: const Text("Safety center",style: TextStyle(color: Colors.black,)),
           trailing: const Icon(Icons.arrow_forward_ios,size: 18,color: Colors.black,),
-          onTap: () {},
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const SafetyCenter()),
+            );
+          },
         ),
         Divider(height: 10,),
         ListTile(
@@ -150,7 +198,7 @@ Widget _buildDrawer() {
           // onTap: () {},
         ),
       ],
-    ),
+    ), 
   )
   );
 }
