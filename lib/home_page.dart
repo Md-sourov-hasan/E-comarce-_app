@@ -3,6 +3,7 @@ import 'package:ionicons/ionicons.dart';
 import 'package:my_app/Grocery_page.dart';
 import 'package:my_app/categories_page.dart';
 import 'package:my_app/cookup_page.dart';
+import 'package:my_app/egg_club.dart';
 import 'package:my_app/pharmacy_page.dart';
 import 'package:my_app/search-page.dart';
 
@@ -53,7 +54,7 @@ class _HomePageState extends State<HomePage> {
 Widget _buildDrawer() {
   return Drawer(
     child:Container(
-      color: Colors.purple,
+      color: Colors.white,
     child: ListView(
       padding: EdgeInsets.zero,
       children: [
@@ -63,25 +64,18 @@ Widget _buildDrawer() {
           child: Row(
             children: [
               CircleAvatar(backgroundImage: NetworkImage('https://www.pngall.com/wp-content/uploads/5/User-Profile-PNG-High-Quality-Image.png'),
-              radius: 40,
+              radius: 30,
               ),
-              SizedBox(width: 10),
+              SizedBox(width: 0),
               Column(
               
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  // ------ YOUR LOGO HERE ------
-                  // Example:
-                  // Image.asset("assets/logo.png", height: 60),
-                  // তুমি তোমার logo এখানে বসাবে ↓↓↓
-                  // TODO: Add your logo image here
-                  
-                  const SizedBox(height: 10),
-              
-                  const Text(
-                    "My App",
-                    style: TextStyle(color: Colors.white, fontSize: 22),
-                  ),
+                  const SizedBox(height:10),
+              TextButton(
+                onPressed: () {},
+                 child: Text("Login",style: TextStyle(color: const Color.fromARGB(255, 136, 98, 143),fontSize: 20,fontWeight: FontWeight.bold),)
+                 ),
                 ],
               ),
             ],
@@ -95,30 +89,209 @@ Widget _buildDrawer() {
         // ------------- More Pages You Want -------------
         // Example Settings Page
         ListTile(
-          leading: const Icon(Icons.settings,color: Colors.white,),
-          title: const Text("Settings",style: TextStyle(color: Colors.white,)),
-
-          // ------ YOUR SETTINGS PAGE HERE ------
-          // TODO: Replace with your own page
-          // Navigator.push(context, MaterialPageRoute(builder: (_) => SettingsPage()));
-
-          onTap: () {},
-        ),
-
-        // Logout
-        ListTile(
-          leading: const Icon(Icons.logout,color: Colors.white,),
-          title: const Text("Logout",style: TextStyle(color: Colors.white,)),
+          leading: const Icon(Icons.egg_sharp,color: Color.fromARGB(255, 202, 202, 106),),
+          title: const Text("Egg Club",style: TextStyle(color: Colors.black,)),
+          trailing: const Icon(Icons.arrow_forward_ios,size: 16,color: Colors.black,),
           onTap: () {
-            // TODO: Add your logout logic
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const EggClub()),
+            );
           },
         ),
-
+        ListTile(
+          leading: const Icon(Icons.store,color: Colors.blueAccent),
+          title: const Text("All Store",style: TextStyle(color: Colors.black,)),
+          trailing: const Icon(Icons.arrow_forward_ios,size: 16,color: Colors.black,),
+          onTap: () {},
+        ),
+        ListTile(
+          leading: const Icon(Icons.percent_outlined,color: Colors.blueAccent),
+          title: const Text("All Store",style: TextStyle(color: Colors.black,)),
+          trailing: const Icon(Icons.arrow_forward_ios,size: 16,color: Colors.black,),
+          onTap: () {},
+        ),
+        Divider(height: 10,),
+        ListTile(
+          leading: const Icon(Icons.egg,color: Color.fromARGB(255, 241, 239, 79)),
+          title: const Text("Premium Care",style: TextStyle(color: Colors.black,)),
+          trailing: const Icon(Icons.arrow_forward_ios,size: 16,color: Colors.black,),
+          onTap: () {},
+        ),
+        ListTile(
+          leading: const Icon(Icons.help_outline,color: Color.fromARGB(255, 214, 89, 236)),
+          title: const Text("Help",style: TextStyle(color: Colors.black,)),
+          trailing: const Icon(Icons.arrow_forward_ios,size: 16,color: Colors.black,),
+          onTap: () {},
+        ),
+        ListTile(
+          leading: const Icon(Icons.phone_outlined,color: Color.fromARGB(255, 214, 89, 236)),
+          title: const Text("Customer Service",style: TextStyle(color: Colors.black,)),
+          trailing: const Icon(Icons.arrow_forward_ios,size: 16,color: Colors.black,),
+          onTap: () {},
+        ),
+        ListTile(
+          leading: const Icon(Icons.chat_outlined,color: Color.fromARGB(255, 214, 89, 236)),
+          title: const Text("Customer Service",style: TextStyle(color: Colors.black,)),
+          trailing: const Icon(Icons.arrow_forward_ios,size: 16,color: Colors.black,),
+          onTap: () {},
+        ),
+        ListTile(
+          leading: const Icon(Icons.safety_check_rounded,color: Color.fromARGB(255, 214, 89, 236)),
+          title: const Text("Customer Service",style: TextStyle(color: Colors.black,)),
+          trailing: const Icon(Icons.arrow_forward_ios,size: 18,color: Colors.black,),
+          onTap: () {},
+        ),
+        Divider(height: 10,),
+        ListTile(
+          leading: const Icon(Icons.egg,color: Color.fromARGB(240, 241, 234, 214)),
+          title: const Text("Chaldal",style: TextStyle(color: Colors.black,fontStyle:FontStyle.italic)),
+          // trailing: const Icon(Icons.arrow_forward_ios,size: 16,color: Colors.black,),
+          // onTap: () {},
+        ),
       ],
     ),
   )
   );
 }
+
+
+
+
+// Widget buildDrawer() {
+//   return Drawer(
+//     child: Container(
+//       color: Colors.white,
+//       child: ListView(
+//         padding: EdgeInsets.symmetric(vertical: 30),
+//         children: [
+
+//           // ---------------- Drawer Header ----------------
+//           Container(
+//             padding: EdgeInsets.all(20),
+//             child: Row(
+//               children: [
+
+//                 // User Avatar
+//                 CircleAvatar(
+//                   radius: 28,
+//                   backgroundColor: Colors.purple.shade100,
+//                   backgroundImage: NetworkImage('https://www.pngall.com/wp-content/uploads/5/User-Profile-PNG-High-Quality-Image.png')
+//                 ),
+
+//                 SizedBox(width: 12),
+
+//                 // Login Text + Language Switch
+//                 Expanded(
+//                   child: Column(
+//                     crossAxisAlignment: CrossAxisAlignment.start,
+//                     children: [
+//                       Text(
+//                         "Login",
+//                         style: TextStyle(
+//                           fontSize: 20,
+//                           fontWeight: FontWeight.w600,
+//                           color: Colors.purple,
+//                         ),
+//                       ),
+
+//                       SizedBox(height: 10),
+
+//                       // Language Switch Button
+//                       Container(
+//                         decoration: BoxDecoration(
+//                           color: Colors.purple.shade100,
+//                           borderRadius: BorderRadius.circular(20),
+//                         ),
+//                         padding: EdgeInsets.symmetric(horizontal: 6, vertical: 4),
+//                         child: Row(
+//                           mainAxisSize: MainAxisSize.min,
+//                           children: [
+//                             langButton("EN", true),
+//                             langButton("বাংলা", false),
+//                           ],
+//                         ),
+//                       ),
+//                     ],
+//                   ),
+//                 ),
+//               ],
+//             ),
+//           ),
+
+//           Divider(),
+
+//           // ---------------- Menu Items ----------------
+//           drawerItem(Icons.emoji_food_beverage, "Egg Club"),
+//           drawerItem(Icons.store, "All Stores"),
+//           drawerItem(Icons.local_offer, "Offers"),
+//           drawerItem(Icons.star, "Premium Care"),
+//           drawerItem(Icons.help_outline, "Help"),
+//           drawerItem(Icons.support_agent, "Customer Support"),
+//           drawerItem(Icons.chat, "Live Chat"),
+//           drawerItem(Icons.security, "Safety Center"),
+
+//           SizedBox(height: 30),
+
+//           // ---------------- Footer ----------------
+//           Padding(
+//             padding: const EdgeInsets.only(left: 20, bottom: 20),
+//             child: Row(
+//               children: [
+//                 Icon(Icons.egg, color: Colors.orange),
+//                 SizedBox(width: 6),
+//                 Text("Chaldal",
+//                     style: TextStyle(
+//                         fontSize: 16, color: Colors.black54)),
+//                 Spacer(),
+//                 Padding(
+//                   padding: const EdgeInsets.only(right: 20),
+//                   child: Text("10.4.9",
+//                       style: TextStyle(color: Colors.black45)),
+//                 )
+//               ],
+//             ),
+//           ),
+//         ],
+//       ),
+//     ),
+//   );
+// }
+
+// // Drawer Item Builder
+// Widget drawerItem(IconData icon, String title) {
+//   return ListTile(
+//     leading: Icon(icon, color: Colors.purple),
+//     title: Text(title, style: TextStyle(fontSize: 16)),
+//     trailing: Icon(Icons.arrow_forward_ios, size: 16, color: Colors.grey),
+//     onTap: () {},
+//   );
+// }
+
+// // Language Button
+// Widget langButton(String text, bool active) {
+//   return Container(
+//     padding: EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+//     decoration: BoxDecoration(
+//       color: active ? Colors.white : Colors.transparent,
+//       borderRadius: BorderRadius.circular(20),
+//     ),
+//     child: Text(
+//       text,
+//       style: TextStyle(
+//         color: Colors.purple,
+//         fontWeight: FontWeight.bold,
+//       ),
+//     ),
+//   );
+// }
+
+
+
+
+
+
+
 
   // ---------- AppBar ----------
   AppBar _buildAppBar() {

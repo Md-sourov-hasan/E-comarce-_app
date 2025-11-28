@@ -295,3 +295,324 @@ class GroceryPage extends StatelessWidget {
     );
   }
 }
+
+// import 'dart:convert';
+// import 'package:flutter/material.dart';
+// import 'package:http/http.dart' as http;
+
+// class GroceryPage extends StatefulWidget {
+//   const GroceryPage({super.key});
+
+//   @override
+//   State<GroceryPage> createState() => _GroceryPageState();
+// }
+
+// class _GroceryPageState extends State<GroceryPage> {
+//   List<String> images = [];
+//   bool loading = true;
+
+//   // -------------------- Fetch images from NestJS --------------------
+//   Future<void> fetchImages() async {
+//     const String baseUrl = "https://api-tesing.onrender.com"; // LIVE API URL
+
+//     try {
+//       final response = await http.get(
+//         Uri.parse("$baseUrl/image/all"),
+//       );
+
+//       if (response.statusCode == 200) {
+//         final data = jsonDecode(response.body);
+
+//         setState(() {
+//           images = List<String>.from(
+//             data["images"].map((img) => img["url"]),
+//           );
+//           loading = false;
+//         });
+//       } else {
+//         setState(() => loading = false);
+//         print("Failed to load images: ${response.statusCode}");
+//       }
+//     } catch (e) {
+//       setState(() => loading = false);
+//       print("Error fetching images: $e");
+//     }
+//   }
+
+//   @override
+//   void initState() {
+//     super.initState();
+//     fetchImages();
+//   }
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(
+//         title: const Text("All Uploaded Images"),
+//         backgroundColor: Colors.purple,
+//       ),
+//       body: loading
+//           ? const Center(child: CircularProgressIndicator())
+//           : images.isEmpty
+//               ? const Center(child: Text("No Images Found"))
+//               : GridView.builder(
+//                   padding: const EdgeInsets.all(10),
+//                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+//                     crossAxisCount: 3,
+//                     mainAxisSpacing: 10,
+//                     crossAxisSpacing: 10,
+//                   ),
+//                   itemCount: images.length,
+//                   itemBuilder: (context, index) {
+//                     final url = images[index];
+
+//                     return Container(
+//                       decoration: BoxDecoration(
+//                         borderRadius: BorderRadius.circular(12),
+//                         color: Colors.grey.shade200,
+//                       ),
+//                       child: ClipRRect(
+//                         borderRadius: BorderRadius.circular(12),
+//                         child: Image.network(
+//                           url,
+//                           fit: BoxFit.cover,
+//                           errorBuilder: (context, error, stackTrace) =>
+//                               const Icon(Icons.broken_image, size: 40),
+//                         ),
+//                       ),
+//                     );
+//                   },
+//                 ),
+//     );
+//   }
+// }
+
+
+
+// import 'dart:convert';
+// import 'dart:async';
+// import 'package:flutter/material.dart';
+// import 'package:http/http.dart' as http;
+
+// class GroceryPage extends StatefulWidget {
+//   const GroceryPage({super.key});
+
+//   @override
+//   State<GroceryPage> createState() => _GroceryPageState();
+// }
+
+// class _GroceryPageState extends State<GroceryPage> {
+//   List<String> images = [];
+//   bool loading = true;
+
+//   // -------------------- Fetch images from NestJS --------------------
+//   Future<void> fetchImages() async {
+//     const String baseUrl = "https://api-tesing.onrender.com"; // LIVE API URL
+
+//     try {
+//       final response = await http.get(Uri.parse("$baseUrl/image/all"));
+
+//       if (response.statusCode == 200) {
+//         final data = jsonDecode(response.body);
+
+//         setState(() {
+//           images = List<String>.from(
+//             data["images"].map((img) => img["url"]),
+//           );
+//           loading = false;
+//         });
+//       } else {
+//         setState(() => loading = false);
+//         print("Failed to load images: ${response.statusCode}");
+//       }
+//     } catch (e) {
+//       setState(() => loading = false);
+//       print("Error fetching images: $e");
+//     }
+//   }
+
+//   @override
+//   void initState() {
+//     super.initState();
+//     fetchImages();
+
+//     // Optional: Auto refresh every 10 seconds
+//     // Timer.periodic(const Duration(seconds: 10), (timer) {
+//     //   fetchImages();
+//     // });
+//   }
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(
+//         title: const Text("All Uploaded Images"),
+//         backgroundColor: Colors.purple,
+//       ),
+//       body: RefreshIndicator(
+//         onRefresh: fetchImages,
+//         child: loading
+//             ? const Center(child: CircularProgressIndicator())
+//             : images.isEmpty
+//                 ? const Center(child: Text("No Images Found"))
+//                 : GridView.builder(
+//                     padding: const EdgeInsets.all(10),
+//                     gridDelegate:
+//                         const SliverGridDelegateWithFixedCrossAxisCount(
+//                       crossAxisCount: 3,
+//                       mainAxisSpacing: 10,
+//                       crossAxisSpacing: 10,
+//                     ),
+//                     itemCount: images.length,
+//                     itemBuilder: (context, index) {
+//                       // Cache breaker added → always fresh image
+//                       final url =
+//                           "${images[index]}?v=${DateTime.now().millisecondsSinceEpoch}";
+
+//                       return Container(
+//                         decoration: BoxDecoration(
+//                           borderRadius: BorderRadius.circular(12),
+//                           color: Colors.grey.shade200,
+//                         ),
+//                         child: ClipRRect(
+//                           borderRadius: BorderRadius.circular(12),
+//                           child: Image.network(
+//                             url,
+//                             fit: BoxFit.cover,
+//                             errorBuilder: (context, error, stackTrace) =>
+//                                 const Icon(Icons.broken_image, size: 40),
+//                           ),
+//                         ),
+//                       );
+//                     },
+//                   ),
+//       ),
+//     );
+//   }
+// }
+
+
+
+// import 'dart:convert';
+// import 'dart:io';
+// import 'package:flutter/material.dart';
+// import 'package:http/http.dart' as http;
+// import 'package:image_picker/image_picker.dart';
+
+// class GroceryPage extends StatefulWidget {
+//   const GroceryPage({super.key});
+
+//   @override
+//   State<GroceryPage> createState() => _GroceryPageState();
+// }
+
+// class _GroceryPageState extends State<GroceryPage> {
+//   List<Map<String, dynamic>> images = [];
+//   bool loading = true;
+
+//   final String baseUrl = "https://api-tesing.onrender.com";
+
+//   // -------------------- Fetch images --------------------
+//   Future<void> fetchImages() async {
+//     try {
+//       final response = await http.get(Uri.parse("$baseUrl/image/all"));
+
+//       if (response.statusCode == 200) {
+//         final data = jsonDecode(response.body);
+
+//         setState(() {
+//           images = List<Map<String, dynamic>>.from(data["images"]);
+//           loading = false;
+//         });
+//       } else {
+//         loading = false;
+//         print("Failed to load images: ${response.statusCode}");
+//       }
+//     } catch (e) {
+//       loading = false;
+//       print("Error fetching images: $e");
+//     }
+//   }
+
+//   @override
+//   void initState() {
+//     super.initState();
+//     fetchImages();
+//   }
+
+//   // -------------------- Update Image --------------------
+//   Future<void> updateImage(String oldFile) async {
+//     final picker = ImagePicker();
+//     final picked = await picker.pickImage(source: ImageSource.gallery);
+
+//     if (picked == null) return;
+
+//     var request = http.MultipartRequest(
+//       "PUT",
+//       Uri.parse("$baseUrl/image/update/$oldFile"),
+//     );
+
+//     request.files.add(
+//       await http.MultipartFile.fromPath("image", picked.path),
+//     );
+
+//     final response = await request.send();
+
+//     if (response.statusCode == 200) {
+//       print("Image updated successfully");
+//       fetchImages(); // refresh UI
+//     } else {
+//       print("Failed to update image: ${response.statusCode}");
+//     }
+//   }
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(
+//         title: const Text("All Uploaded Images"),
+//         backgroundColor: Colors.purple,
+//       ),
+//       body: loading
+//           ? const Center(child: CircularProgressIndicator())
+//           : GridView.builder(
+//               padding: const EdgeInsets.all(10),
+//               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+//                 crossAxisCount: 3,
+//                 mainAxisSpacing: 10,
+//                 crossAxisSpacing: 10,
+//               ),
+//               itemCount: images.length,
+//               itemBuilder: (context, index) {
+//                 final img = images[index];
+//                 final fullUrl =
+//                     "${img['url']}?v=${DateTime.now().millisecondsSinceEpoch}";
+
+//                 return GestureDetector(
+//                   onTap: () {
+//                     updateImage(img["filename"]);
+//                   },
+//                   child: Container(
+//                     decoration: BoxDecoration(
+//                       borderRadius: BorderRadius.circular(12),
+//                       color: Colors.grey.shade200,
+//                     ),
+//                     child: ClipRRect(
+//                       borderRadius: BorderRadius.circular(12),
+//                       child: Image.network(
+//                         fullUrl,
+//                         fit: BoxFit.cover,
+//                         errorBuilder: (context, error, stackTrace) =>
+//                             const Icon(Icons.broken_image, size: 40),
+//                       ),
+//                     ),
+//                   ),
+//                 );
+//               },
+//             ),
+//     );
+//   }
+// }
+
+
